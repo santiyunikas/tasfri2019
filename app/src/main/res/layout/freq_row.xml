@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/grid"
+    android:layout_gravity="center_horizontal"
+    android:gravity="left|top"
+    android:weightSum="4"
+    >
+    <TextView
+        android:id="@+id/col1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Frequency Bands"
+        android:textColor="@color/colorPrimary"
+        style="bold"
+        android:padding="3dp"
+        android:layout_weight="1"
+        />
+    <TextView
+        android:id="@+id/col2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Applications"
+        android:textColor="@color/colorPrimary"
+        style="bold"
+        android:padding="3dp"
+        android:layout_weight="1"
+        />
+    <TextView
+        android:id="@+id/col3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Footnote"
+        android:textColor="@color/colorPrimary"
+        style="bold"
+        android:padding="3dp"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:id="@+id/col4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Footnote"
+        android:textColor="@color/colorPrimary"
+        style="bold"
+        android:padding="3dp"
+        android:layout_weight="1"/>
+
+</LinearLayout>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/splashColor"
+    android:orientation="vertical"
+    tools:context=".HomeActivity">
+
+    <Toolbar
+        android:id="@+id/toolbarHome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:theme="@style/ToolbarStyle"
+        tools:ignore="NewApi"></Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="40dp"
+            android:layout_gravity="center_horizontal"
+            >
+
+            <LinearLayout
+                android:id="@+id/linea"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                >
+
+                <Button
+                    android:id="@+id/btnFreq"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_freq"
+                    android:layout_marginRight="15dp"
+
+                    />
+
+                <Button
+                    android:id="@+id/btnAllo"
+                    android:layout_toRightOf="@+id/btnFreq"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_allo"
+                    android:layout_marginLeft="15dp"
+
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lineb"
+                android:layout_marginTop="40dp"
+                android:layout_below="@+id/linea"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                >
+
+                <Button
+                    android:id="@+id/btnApp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_app"
+                    android:layout_marginRight="15dp"
+                    />
+            </LinearLayout>
+
+
+
+        </RelativeLayout>
+
+
+    </ScrollView>
+
+
+
+</LinearLayout>

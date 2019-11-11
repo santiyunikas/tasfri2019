@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/grid"
+    android:layout_gravity="center_horizontal"
+    android:gravity="left|top"
+    >
+    <TextView
+        android:id="@+id/col1"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:text="Frequency Bands"
+        android:textColor="@color/colorPrimary"
+        style="bold"
+        android:padding="3dp"
+        android:layout_weight="1"
+        />
+    <TextView
+        android:id="@+id/col2"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:text="Application"
+        android:textColor="@color/colorPrimary"
+        style="bold"
+        android:padding="3dp"
+        android:layout_weight="1"
+        />
+    <TextView
+        android:id="@+id/col3"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:text="Regency"
+        android:textColor="@color/colorPrimary"
+        style="bold"
+        android:padding="3dp"
+        android:layout_weight="1"
+        />
+    <TextView
+        android:id="@+id/col4"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:text="Start Date"
+        android:textColor="@color/colorPrimary"
+        style="bold"
+        android:padding="3dp"
+        android:layout_weight="1"
+        />
+    <TextView
+        android:id="@+id/col5"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:text="End Date"
+        android:textColor="@color/colorPrimary"
+        style="bold"
+        android:padding="3dp"
+        android:layout_weight="1"
+        />
+    <TextView
+        android:id="@+id/col6"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:text="Priority"
+        android:textColor="@color/colorPrimary"
+        style="bold"
+        android:padding="3dp"
+        android:layout_weight="1"
+        />
+<LinearLayout
+    android:id="@+id/btn"
+    android:layout_width="40dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="0.5"
+    android:orientation="horizontal">
+
+    <Button
+    android:id="@+id/btnRemoveAss"
+    android:layout_width="25dp"
+    android:layout_height="25dp"
+    android:layout_margin="5dp"
+    android:background="@drawable/btn_remove"
+    android:layout_gravity="center"/>
+
+
+
+</LinearLayout>
+
+
+
+
+</LinearLayout>

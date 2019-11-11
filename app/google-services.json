@@ -1,0 +1,93 @@
+{
+  "project_info": {
+    "project_number": "130349416551",
+    "firebase_url": "https://tasfri-2019.firebaseio.com",
+    "project_id": "tasfri-2019",
+    "storage_bucket": "tasfri-2019.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:130349416551:android:3e09562b7056f7654b54c2",
+        "android_client_info": {
+          "package_name": "com.example.tasfri"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "130349416551-413bvk403ab003surmp9uqrimnr2n55j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tasfri",
+            "certificate_hash": "669bec4cbf7112b514c61df6ef05c52a0c5e81b8"
+          }
+        },
+        {
+          "client_id": "130349416551-nl5oh28tdbnkbq32rct9qjtad488goqe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTJ5cW26nDa7OZvjs74TuQMUSIpXZ8rhI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "130349416551-nl5oh28tdbnkbq32rct9qjtad488goqe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:130349416551:android:87702c5cc7ebf049",
+        "android_client_info": {
+          "package_name": "com.santiys.tasfri2019"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "130349416551-tllnbnljooqov548ikg668kdkcgo1pm7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.santiys.tasfri2019",
+            "certificate_hash": "669bec4cbf7112b514c61df6ef05c52a0c5e81b8"
+          }
+        },
+        {
+          "client_id": "130349416551-o998buagujbhs7it69gmeeeis4qgv5cn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.santiys.tasfri2019",
+            "certificate_hash": "f64ea46bb2934455920a3416dedc5d78754a9260"
+          }
+        },
+        {
+          "client_id": "130349416551-nl5oh28tdbnkbq32rct9qjtad488goqe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTJ5cW26nDa7OZvjs74TuQMUSIpXZ8rhI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "130349416551-nl5oh28tdbnkbq32rct9qjtad488goqe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
