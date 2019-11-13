@@ -1,4 +1,4 @@
-package com.example.tasfri2019;
+package com.example.tasfri;
 
 public class Users {
     private String name, instansi, email, password, role;
