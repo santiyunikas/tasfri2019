@@ -11,11 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ForgotpassActivity"></activity>
-        <activity android:name=".LoginActivity"></activity>
-        <activity android:name=".OptionActivity" />
-        <activity android:name=".SignupActivity" />
-        <activity android:name=".AdminsignActivity" />
+        <activity
+            android:name=".ForgotpassActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="FORGOT PASSWORD"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".FootnoteActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -40,6 +40,22 @@
             android:name=".HomeActivity"
             android:label="HOME"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AdminsignActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SignupActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".OptionActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".LoginActivity"
+            android:configChanges="keyboardHidden|orientation"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
