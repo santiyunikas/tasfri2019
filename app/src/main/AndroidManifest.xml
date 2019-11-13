@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".OptionActivity"></activity>
+        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".OptionActivity" />
         <activity android:name=".SignupActivity" />
         <activity android:name=".AdminsignActivity" />
         <activity
