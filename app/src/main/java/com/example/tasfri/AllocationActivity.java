@@ -33,9 +33,10 @@ import java.util.List;
 
 public class AllocationActivity extends AppCompatActivity {
     private TextView txNull;
-    private EditText fromAllo, toAllo;
+    private EditText fromAllo, toAllo, alloEd, appEd, ftnoteEd, freqEndEd, freqStartEd;
+    private Spinner priorEd, satuanEd;
     private String fromAlloText, toAlloText;
-    private Button srcAllo, ftnote;
+    private Button srcAllo, update,cancel, ftnote;
     private Spinner spSatuan;
     private RecyclerView data;
 
@@ -47,6 +48,8 @@ public class AllocationActivity extends AppCompatActivity {
 
     AlloAdapter adapter;
     List<Alokasi> listAllo = new ArrayList<>();
+    AlertDialog.Builder builder;
+    AlertDialog dialog;
 
     String allocationTx, aplikasiTx, footnoteTx, freqEndTx, freqRangeTx, freqStartTx, freqStartEndTx, priorityTx, satuanTx, keyTx;
 
@@ -101,6 +104,31 @@ public class AllocationActivity extends AppCompatActivity {
                     addData();
                 }
             }});
+
+
+        adapter.setOnItemClickListener(new ItemClickListener() {
+            @Override
+            public void OnItemClick(int position, Alokasi alloData) {
+                builder = new AlertDialog.Builder(AllocationActivity.this);
+                builder.setTitle("Update Allocation Info");
+                builder.setCancelable(false);
+                View view = LayoutInflater.from(AllocationActivity.this).inflate(R.layout.update_allo,null,false);
+                InitUpdateDialog(position, view, alloData);
+                builder.setView(view);
+                dialog = builder.create();
+                dialog.show();
+            }
+
+            @Override
+            public void OnItemClick(int position, Aplikasi appData) {
+
+            }
+
+            @Override
+            public void OnItemClick(int position, Assignment alloData) {
+
+            }
+        });
 
     }
 
@@ -191,6 +219,123 @@ public class AllocationActivity extends AppCompatActivity {
         });
     }
 
+    private void InitUpdateDialog(final int position, View view, final Alokasi alloDataIn) {
+        alloEd = view.findViewById(R.id.ed_update_alokasi_allo);
+        appEd = view.findViewById(R.id.ed_update_aplikasi_allo);
+        ftnoteEd = view.findViewById(R.id.ed_update_footnote_allo);
+        freqEndEd = view.findViewById(R.id.ed_update_freqEnd_allo);
+        freqStartEd = view.findViewById(R.id.ed_update_freqStart_allo);
+        priorEd = view.findViewById(R.id.ed_update_prior_allo);
+        satuanEd = view.findViewById(R.id.ed_update_satuan_allo);
+
+        update = view.findViewById(R.id.btn_update_allo);
+        cancel = view.findViewById(R.id.btn_cancelUpd_allo);
+
+        alloEd.setText(alloDataIn.getAllocation());
+        appEd.setText(alloDataIn.getAplikasi());
+        ftnoteEd.setText(alloDataIn.getFootnote());
+        freqEndEd.setText(alloDataIn.getFreqEnd());
+        freqStartEd.setText(alloDataIn.getFreqStart());
+
+        update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (Double.valueOf(freqStartEd.getText().toString())>Double.valueOf(freqEndEd.getText().toString())){
+                    freqEndEd.setError("Must higher than Frequency Start");
+                    freqStartEd.setError("Must lower than Frequency End");
+                }else{
+                    if(ftnoteEd.getText().toString().isEmpty()||freqStartEd.getText().toString().isEmpty()||freqEndEd.getText().toString().isEmpty()||alloEd.getText().toString().isEmpty()||appEd.getText().toString().isEmpty()||priorEd.getSelectedItem().toString().equalsIgnoreCase("Priority")||satuanEd.getSelectedItem().toString().equalsIgnoreCase("Select Unit")){
+                        Toast.makeText(AllocationActivity.this, "Fill the form completely", Toast.LENGTH_LONG).show();
+                    }else{
+                        AlertDialog.Builder builder = new AlertDialog.Builder(AllocationActivity.this);
+                        builder.setTitle(R.string.app_name);
+                        builder.setIcon(R.mipmap.ic_launcher);
+                        builder.setMessage("Are sure to make changes ?")
+                                .setCancelable(false)
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        if (priorEd.getSelectedItem().toString().equalsIgnoreCase("primary")){
+                                            allocationTx = alloEd.getText().toString().toUpperCase();
+                                        }else{
+                                            allocationTx = alloEd.getText().toString();
+                                        }
+                                        aplikasiTx = appEd.getText().toString();
+                                        footnoteTx = ftnoteEd.getText().toString();
+                                        freqEndTx = freqEndEd.getText().toString();
+                                        freqRangeTx = String.valueOf(Double.valueOf(freqStartTx)-Double.valueOf(freqEndTx));
+                                        freqStartTx = freqStartEd.getText().toString();
+                                        freqStartEndTx =freqStartEd.getText().toString()+"-"+freqEndEd.getText().toString();
+                                        satuanTx = satuanEd.getSelectedItem().toString();
+                                        priorityTx = priorEd.getSelectedItem().toString();
+                                        keyTx = freqStartEndTx+"_"+satuanTx+"_"+allocationTx+"_"+aplikasiTx+"_"+footnoteTx+"_"+priorityTx;
+
+                                        reference = FirebaseDatabase.getInstance().getReference().child("Data Alokasi");
+                                        Query a = reference.orderByChild("freqStartEnd_satuan_allocation_aplikasi_footnote_primarySecondary").equalTo(alloDataIn.getFreqStartEnd_satuan_allocation_aplikasi_footnote_primarySecondary());
+                                        a.addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                for (DataSnapshot ds: dataSnapshot.getChildren()){
+                                                    ds.getRef().child("allocation").setValue(allocationTx);
+                                                    ds.getRef().child("aplikasi").setValue(aplikasiTx);
+                                                    ds.getRef().child("footnote").setValue(footnoteTx);
+                                                    ds.getRef().child("freqEnd").setValue(freqEndTx);
+                                                    ds.getRef().child("freqRange").setValue(freqRangeTx);
+                                                    ds.getRef().child("freqStart").setValue(freqStartTx);
+                                                    ds.getRef().child("freqStartEnd").setValue(freqStartEndTx);
+                                                    ds.getRef().child("satuan").setValue(satuanTx);
+                                                    ds.getRef().child("primarySecondary").setValue(priorityTx);
+                                                    ds.getRef().child("freqStartEnd_satuan_aplikasi_instansi_startDate_endDate_primarySecondary_keterangan").setValue(keyTx);
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
+
+                                        Alokasi alloData = new Alokasi();
+
+                                        alloData.setAllocation(allocationTx);
+                                        alloData.setAplikasi(aplikasiTx);
+                                        alloData.setFootnote(footnoteTx);
+                                        alloData.setFreqEnd(freqEndTx);
+                                        alloData.setFreqRange(freqRangeTx);
+                                        alloData.setFreqStart(freqStartTx);
+                                        alloData.setFreqStartEnd(freqStartEndTx);
+                                        alloData.setPrimarySecondary(priorityTx);
+                                        alloData.setSatuan(satuanTx);
+                                        alloData.setFreqStartEnd_satuan_allocation_aplikasi_footnote_primarySecondary(keyTx);
+
+                                        adapter.UpdateData(position, alloData);
+                                        Toast.makeText(AllocationActivity.this,"Allocation Updated..", Toast.LENGTH_SHORT).show();
+
+                                        Intent intent = getIntent();
+                                        finish();
+                                        startActivity(intent);
+
+                                    }
+                                })
+                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+                        AlertDialog alert = builder.create();
+                        alert.show();
+                    }
+                }
+
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+    }
+
     @SuppressLint({"NewApi", "ResourceType"})
     private void toolbarSet(){
         Toolbar toolbar = findViewById(R.id.toolbarAllo);
@@ -218,7 +363,7 @@ public class AllocationActivity extends AppCompatActivity {
                                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         auth.getInstance().signOut();
-                                        startActivity(new Intent(AllocationActivity.this, HomeActivity.class));
+                                        startActivity(new Intent(AllocationActivity.this, OptionActivity.class));
                                         finish();
                                     }
                                 })

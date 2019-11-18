@@ -58,7 +58,27 @@ public class AlloAdapter extends RecyclerView.Adapter<AlloAdapter.HolderAllo>{
         if (position==0){
             holder.remove.setVisibility(View.GONE);
         }
-        holder.btn.setVisibility(View.GONE);
+
+        if (auth.getUid()!= null){
+            reference = getDb.getReference("user");
+            reference.child(user.getUid()).addValueEventListener(new ValueEventListener(){
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Users users = dataSnapshot.getValue(Users.class);
+                    if(users.getRole().equalsIgnoreCase("user")){
+                        holder.btn.setVisibility(View.GONE);
+                        isUser[0] = 1;
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }else{
+            holder.btn.setVisibility(View.GONE);
+        }
 
         holder.freqBands.setText(alloData.getFreqStartEnd());
         holder.alokasi.setText(alloData.getAllocation());
