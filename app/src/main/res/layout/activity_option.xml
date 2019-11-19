@@ -28,58 +28,58 @@
                 />
 
             <LinearLayout
-                android:layout_gravity="center"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/white_background"
-                android:paddingBottom="30dp"
-                >
+                android:orientation="vertical"
+                android:paddingBottom="30dp">
+
                 <ImageView
                     android:id="@+id/logo_login"
-                    android:layout_marginTop="50dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/logo_login"
-                    android:layout_gravity="center"/>
-                <!--<Button-->
-                <!--android:id="@+id/btn_admin"-->
-                <!--android:layout_marginTop="25dp"-->
-                <!--android:layout_marginLeft="25dp"-->
-                <!--android:layout_marginRight="25dp"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="Admin"-->
-                <!--android:textColor="@color/whiteBackground"-->
-                <!--android:background="#02468F"-->
-                <!--android:layout_below="@+id/logo_login"-->
-                <!--/>-->
+                    android:layout_gravity="center"
+                    android:layout_marginTop="50dp"
+                    android:src="@drawable/logo_login" />
+
+                <Button
+                    android:id="@+id/btn_admin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/logo_login"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginRight="25dp"
+                    android:background="#02468F"
+                    android:text="Admin"
+                    android:textColor="@color/whiteBackground" />
+
                 <Button
                     android:id="@+id/btn_user"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginRight="25dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="User"
-                    android:textColor="@color/whiteBackground"
-                    android:background="#02468F"
                     android:layout_below="@+id/logo_login"
-                    />
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="25dp"
+                    android:background="#02468F"
+                    android:text="User"
+                    android:textColor="@color/whiteBackground" />
+
                 <Button
                     android:id="@+id/btn_guest"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginRight="25dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="guest"
-                    android:textColor="@color/whiteBackground"
-                    android:background="#02468F"
                     android:layout_below="@+id/btn_user"
-                    />
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="25dp"
+                    android:background="#02468F"
+                    android:text="guest"
+                    android:textColor="@color/whiteBackground" />
             </LinearLayout>
         </LinearLayout>
 

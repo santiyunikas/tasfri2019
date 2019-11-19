@@ -10,8 +10,8 @@ import android.widget.ImageView;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class OptionActivity extends AppCompatActivity implements View.OnClickListener {
-    private Button btnGuest, btnUser;
-    ImageView btnAdmin;
+    private Button btnGuest, btnUser, btnAdmin;
+   // ImageView btnAdmin;
     private FirebaseAuth auth;
     private Intent intent;
     private int actionTake;
@@ -20,8 +20,8 @@ public class OptionActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_option);
-        actionTake = 1;
-        btnAdmin = findViewById(R.id.logo_tasfri);
+     //   actionTake = 1;
+        btnAdmin = findViewById(R.id.btn_admin);
         btnGuest = findViewById(R.id.btn_guest);
         btnUser = findViewById(R.id.btn_user);
 
@@ -45,9 +45,9 @@ public class OptionActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()){
 //            case R.id.btn_admin :
-            case R.id.logo_tasfri :
-                actionTake++;
-                if(actionTake>=10){
+            case R.id.btn_admin :
+              //  actionTake++;
+               // if(actionTake>=10){
                     if (auth.getUid()!= null){
                         intent = new Intent(OptionActivity.this, HomeActivity.class);
                         finish();
@@ -56,7 +56,7 @@ public class OptionActivity extends AppCompatActivity implements View.OnClickLis
                         finish();
                     }
                     startActivity(intent);
-                }
+                //}
                 break;
             case R.id.btn_guest :
                 intent = new Intent(OptionActivity.this, HomeActivity.class);
