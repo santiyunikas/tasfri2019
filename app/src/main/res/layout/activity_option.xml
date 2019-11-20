@@ -61,7 +61,7 @@
                     android:id="@+id/btn_user"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/logo_login"
+                    android:layout_below="@+id/btn_admin"
                     android:layout_marginLeft="25dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="25dp"

@@ -27,6 +27,10 @@ public class FreqAdapter extends RecyclerView.Adapter<FreqAdapter.HolderFreq> {
 
     public FreqAdapter(List<Alokasi> listAlo) {
         this.listAlo = listAlo;
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
+        getDb = FirebaseDatabase.getInstance();
+        reference = getDb.getReference();
     }
 
     @Override

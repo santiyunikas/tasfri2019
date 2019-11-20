@@ -41,6 +41,8 @@ public class FreqActivity extends AppCompatActivity {
 
     private FirebaseDatabase getDb;
     DatabaseReference reference;
+    FirebaseUser user;
+    private FirebaseAuth auth;
     private DatabaseReference tabel_allo;
 
     String  allocationTx, aplikasiTx, freqStartTx, freqEndTx, freqStartEndTx, primarySecondaryTx, satuanTx, footnoteTx, freqRangeTx;
@@ -64,6 +66,8 @@ public class FreqActivity extends AppCompatActivity {
         adapter = new FreqAdapter(listAlo);
         data.setAdapter(adapter);
 
+        auth = FirebaseAuth.getInstance();
+        getDb = FirebaseDatabase.getInstance();
         txNull = findViewById(R.id.txResultFreq);
 
         toFreq = findViewById(R.id.toFreq);
@@ -73,7 +77,7 @@ public class FreqActivity extends AppCompatActivity {
         data = findViewById(R.id.data);
         data.setVisibility(View.GONE);
 
-
+        user = auth.getCurrentUser();
         getDb = FirebaseDatabase.getInstance();
         reference = getDb.getReference();
 
@@ -206,7 +210,8 @@ public class FreqActivity extends AppCompatActivity {
                                 .setCancelable(false)
                                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        startActivity(new Intent(FreqActivity.this, HomeActivity.class));
+                                        auth.getInstance().signOut();
+                                        startActivity(new Intent(FreqActivity.this, OptionActivity.class));
                                         finish();
                                     }
                                 })

@@ -29,6 +29,9 @@ import com.google.firebase.database.ValueEventListener;
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener{
 
     FirebaseAuth auth;
+    FirebaseUser user;
+    FirebaseDatabase getDb;
+    DatabaseReference reference;
     Button btnFreq, btnAllo, btnApp;
 
     @Override
@@ -37,6 +40,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_home);
         initUi();
         initToolbar();
+
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
+        getDb = FirebaseDatabase.getInstance();
+        reference= getDb.getReference();
 
         ConnectivityManager cm = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
@@ -55,16 +63,61 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         btnAllo = findViewById(R.id.btnAllo);
         btnApp = findViewById(R.id.btnApp);
 
-
         btnFreq.setOnClickListener(this);
         btnAllo.setOnClickListener(this);
         btnApp.setOnClickListener(this);
+
     }
 
     @SuppressLint("NewApi")
     private void initToolbar (){
         Toolbar toolbar = findViewById(R.id.toolbarHome);
         setActionBar(toolbar);
+//        getActionBar().setDisplayHomeAsUpEnabled(true);
+//        toolbar.setNavigationIcon(R.drawable.back_arrow);
+//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//            }
+//        });
+        toolbar.inflateMenu(R.menu.logout);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.logout:
+                        AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
+                        builder.setTitle(R.string.app_name);
+                        builder.setIcon(R.mipmap.ic_launcher);
+                        builder.setMessage("Do you want to exit?")
+                                .setCancelable(false)
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        auth.getInstance().signOut();
+                                        startActivity(new Intent(HomeActivity.this, OptionActivity.class));
+                                        finish();
+                                    }
+                                })
+                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+                        AlertDialog alert = builder.create();
+                        alert.show();
+                        break;
+                }
+
+                return false;
+            }
+        });
+        toolbar.setNavigationOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
