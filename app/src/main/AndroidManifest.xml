@@ -22,14 +22,19 @@
             android:label="FORGOT PASSWORD"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".FootnoteActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="FOOTNOTE"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".AssignmentActivity"
             android:configChanges="keyboardHidden|orientation"
             android:label="ASSIGNMENT"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".FootnoteActivity"
+            android:name=".AddtasfriActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:label="FOOTNOTE"
+            android:label="ADD TASFRI"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ApplicationActivity"

@@ -70,7 +70,7 @@
                     android:background="@drawable/btn_app"
                     android:layout_marginRight="15dp"
                     />
-              
+
                 <Button
                     android:id="@+id/btnAss"
                     android:layout_width="wrap_content"
@@ -78,16 +78,23 @@
                     android:background="@drawable/btn_assign"
                     android:layout_marginLeft="15dp"
                     />
-
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/linec"
                 android:layout_marginTop="40dp"
                 android:layout_below="@+id/lineb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 >
+
+                <Button
+                    android:id="@+id/btnAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_add"
+                    android:layout_marginRight="25dp"
+                    />
+
                 <Button
                     android:id="@+id/btnProfile"
                     android:layout_width="wrap_content"
@@ -95,7 +102,6 @@
                     android:background="@drawable/btn_profile"
                     />
             </LinearLayout>
-
 
 
 

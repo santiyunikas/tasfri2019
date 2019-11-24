@@ -32,8 +32,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     FirebaseUser user;
     FirebaseDatabase getDb;
     DatabaseReference reference;
-
-    Button btnFreq, btnAllo, btnApp, btnProfile, btnAss;
+    Button btnFreq, btnAllo, btnApp, btnAss, btnAdd, btnProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +45,33 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         user = auth.getCurrentUser();
         getDb = FirebaseDatabase.getInstance();
         reference= getDb.getReference();
+
+        btnAdd.setVisibility(View.GONE);
+        btnAss.setVisibility(View.GONE);
+        btnProfile.setVisibility(View.GONE);
+
+        if (auth.getUid()!= null){
+            reference.child("user").child(user.getUid()).addValueEventListener(new ValueEventListener(){
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Users user = dataSnapshot.getValue(Users.class);
+                    if(user.getRole().equalsIgnoreCase("user")){
+                        btnAss.setVisibility(View.VISIBLE);
+                        btnProfile.setVisibility(View.VISIBLE);
+                    }else{
+                        btnAdd.setVisibility(View.VISIBLE);
+                        btnAss.setVisibility(View.VISIBLE);
+                        btnProfile.setVisibility(View.VISIBLE);
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
 
         ConnectivityManager cm = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
@@ -63,16 +89,16 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         btnFreq = findViewById(R.id.btnFreq);
         btnAllo = findViewById(R.id.btnAllo);
         btnApp = findViewById(R.id.btnApp);
-
-  btnAss = findViewById(R.id.btnAss);      
-  btnProfile = findViewById(R.id.btnProfile);
+        btnAss = findViewById(R.id.btnAss);
+        btnAdd = findViewById(R.id.btnAdd);
+        btnProfile = findViewById(R.id.btnProfile);
 
         btnFreq.setOnClickListener(this);
         btnAllo.setOnClickListener(this);
         btnApp.setOnClickListener(this);
-  btnAss.setOnClickListener(this);      
-  btnProfile.setOnClickListener(this);
-
+        btnAss.setOnClickListener(this);
+        btnAdd.setOnClickListener(this);
+        btnProfile.setOnClickListener(this);
     }
 
     @SuppressLint("NewApi")
@@ -138,9 +164,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnApp :
                 startActivity( new Intent(HomeActivity.this, ApplicationActivity.class));
                 break;
+            case R.id.btnAdd :
+                startActivity( new Intent(HomeActivity.this, AddtasfriActivity.class));
+                break;
             case R.id.btnAss :
                 startActivity(new Intent(HomeActivity.this, AssignmentActivity.class));
-            break;
+                break;
             case R.id.btnProfile :
                 startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
                 break;
