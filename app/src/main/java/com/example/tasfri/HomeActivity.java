@@ -32,7 +32,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     FirebaseUser user;
     FirebaseDatabase getDb;
     DatabaseReference reference;
-    Button btnFreq, btnAllo, btnApp;
+    Button btnFreq, btnAllo, btnApp, btnAss;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,10 +62,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         btnFreq = findViewById(R.id.btnFreq);
         btnAllo = findViewById(R.id.btnAllo);
         btnApp = findViewById(R.id.btnApp);
+        btnAss = findViewById(R.id.btnAss);
 
         btnFreq.setOnClickListener(this);
         btnAllo.setOnClickListener(this);
         btnApp.setOnClickListener(this);
+        btnAss.setOnClickListener(this);
 
     }
 
@@ -131,6 +133,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnApp :
                 startActivity( new Intent(HomeActivity.this, ApplicationActivity.class));
+                break;
+            case R.id.btnAss :
+                startActivity(new Intent(HomeActivity.this, AssignmentActivity.class));
                 break;
         }
     }
