@@ -56,6 +56,7 @@ public class AssAdapter extends RecyclerView.Adapter<AssAdapter.HolderAss>{
         final Assignment assData = listAss.get(position);
 
         if (position==0){
+            holder.remove.setVisibility(View.GONE);
         }
 
         if (auth.getUid()!= null){
@@ -87,6 +88,66 @@ public class AssAdapter extends RecyclerView.Adapter<AssAdapter.HolderAss>{
         holder.startDate.setText(assData.getStartDate());
         holder.endDate.setText(assData.getEndDate());
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (position>0 && isUser[0]==0 && auth.getUid() != null){
+                    itemClickListener.OnItemClick(position, assData);
+                }
+            }
+        });
+
+        holder.remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                builder.setTitle(R.string.app_name);
+                builder.setIcon(R.mipmap.ic_launcher);
+                builder.setMessage("Are you sure to delete data?")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                reference = FirebaseDatabase.getInstance().getReference().child("Data Assignment");
+                                Query a = reference.orderByChild("freqStartEnd_satuan_aplikasi_instansi_startDate_endDate_primarySecondary_keterangan").equalTo(listAss.get(position).getFreqStartEnd_satuan_aplikasi_instansi_startDate_endDate_primarySecondary_keterangan());
+                                a.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot ds: dataSnapshot.getChildren()){
+                                            ds.getRef().removeValue();
+                                            listAss.remove(listAss.indexOf(assData));
+                                            holder.freqBands.setVisibility(View.GONE);
+                                            holder.remove.setVisibility(View.GONE);
+                                            holder.endDate.setVisibility(View.GONE);
+                                            holder.startDate.setVisibility(View.GONE);
+                                            holder.priority.setVisibility(View.GONE);
+                                            holder.instansi.setVisibility(View.GONE);
+                                            holder.aplikasi.setVisibility(View.GONE);
+                                            holder.btn.setVisibility(View.GONE);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+                                notifyDataSetChanged();
+
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
+        });
+
+    }
+
     @Override
     public int getItemCount() {
         return listAss.size();
@@ -95,7 +156,7 @@ public class AssAdapter extends RecyclerView.Adapter<AssAdapter.HolderAss>{
     public static class HolderAss extends RecyclerView.ViewHolder{
 
         TextView freqBands, aplikasi, instansi, startDate, endDate, priority;
-        
+        Button remove;
         LinearLayout btn;
 
         public HolderAss(View itemView) {
@@ -106,9 +167,20 @@ public class AssAdapter extends RecyclerView.Adapter<AssAdapter.HolderAss>{
             startDate= itemView.findViewById(R.id.col4);
             endDate= itemView.findViewById(R.id.col5);
             priority= itemView.findViewById(R.id.col6);
+            remove= itemView.findViewById(R.id.btnRemoveAss);
             btn = itemView.findViewById(R.id.btn);
         }
     }
 
+    public void setOnItemClickListener(ItemClickListener itemClickListener){
+        this.itemClickListener = itemClickListener;
+    }
+
+    public void UpdateData(int position, Assignment assData){
+        listAss.remove(position);
+        listAss.add(assData);
+        notifyItemChanged(position);
+        notifyDataSetChanged();
+    }
 }
 
