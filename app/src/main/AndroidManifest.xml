@@ -11,6 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ProfileActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="PROFILE"
+            android:theme="@style/AppTheme.NoActionBar"
+            ></activity>
         <activity
             android:name=".ForgotpassActivity"
             android:configChanges="keyboardHidden|orientation"

@@ -70,12 +70,19 @@
                     android:background="@drawable/btn_app"
                     android:layout_marginRight="15dp"
                     />
-                <Button
+              
+              <Button
                     android:id="@+id/btnAss"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/btn_assign"
                     android:layout_marginLeft="15dp"
+                      />
+                <Button
+                    android:id="@+id/btnProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_profile"
                     />
             </LinearLayout>
 
