@@ -34,9 +34,10 @@ import java.util.List;
 
 public class ApplicationActivity extends AppCompatActivity {
     private TextView txNull;
-    private EditText fromApp, toApp;
+    private EditText fromApp, toApp, freqstartEd,freqEndEd, applicationEd, footnoteEd;
+    private Spinner satuanEd;
     private String fromAppText, toAppText;
-    private Button srcApp, ftnote;
+    private Button srcApp, ftnote, update, cancel;
     private Spinner spSatuan;
     private RecyclerView data;
 
@@ -48,8 +49,8 @@ public class ApplicationActivity extends AppCompatActivity {
 
     String freqStartTx, freqEndTx, satuanTx, aplikasiTx, footnoteTx, freqRangeTx, keyTx;
 
-    AppAdapter adapter;
-    List<Aplikasi> listApp = new ArrayList<>();
+    com.example.tasfri.AppAdapter adapter;
+    List<com.example.tasfri.Aplikasi> listApp = new ArrayList<>();
     AlertDialog.Builder builder;
     AlertDialog dialog;
 
@@ -64,7 +65,7 @@ public class ApplicationActivity extends AppCompatActivity {
     private void initView(){
         data = (RecyclerView) findViewById(R.id.data);
         data.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new AppAdapter(listApp);
+        adapter = new com.example.tasfri.AppAdapter(listApp);
         data.setAdapter(adapter);
 
         auth = FirebaseAuth.getInstance();
@@ -106,10 +107,33 @@ public class ApplicationActivity extends AppCompatActivity {
             }
         });
 
+        adapter.setOnItemClickListener(new ItemClickListener() {
+            @Override
+            public void OnItemClick(int position, Assignment appData) {
+            }
+
+            @Override
+            public void OnItemClick(int position, com.example.tasfri.Aplikasi appData) {
+                builder = new AlertDialog.Builder(ApplicationActivity.this);
+                builder.setTitle("Update Application Info");
+                builder.setCancelable(false);
+                View view = LayoutInflater.from(ApplicationActivity.this).inflate(R.layout.update_app,null,false);
+                InitUpdateDialog(position, view, appData);
+                builder.setView(view);
+                dialog = builder.create();
+                dialog.show();
+            }
+
+            @Override
+            public void OnItemClick(int position, Alokasi alloData) {
+
+            }
+        });
+
     }
 
     private void addData(){
-        final Aplikasi[] appData = {new Aplikasi()};
+        final com.example.tasfri.Aplikasi[] appData = {new com.example.tasfri.Aplikasi()};
         listApp.removeAll(listApp);
         fromAppText = fromApp.getText().toString();
         toAppText = toApp.getText().toString();
@@ -137,7 +161,7 @@ public class ApplicationActivity extends AppCompatActivity {
                         freqRangeTx = ds.child("freqRange").getValue().toString();
                         keyTx = ds.child("freqStart").getValue().toString()+"-"+ds.child("freqEnd").getValue().toString()+"_"+ds.child("satuan").getValue().toString()+"_"+ds.child("application").getValue().toString()+"_"+ds.child("footnote").getValue().toString();
 
-                        appData[0] = new Aplikasi();
+                        appData[0] = new com.example.tasfri.Aplikasi();
 
                         appData[0].setFreqStartEnd(freqStartTx +" - "+ freqEndTx +" "+ satuanTx);
                         appData[0].setApplication(aplikasiTx);
@@ -186,6 +210,108 @@ public class ApplicationActivity extends AppCompatActivity {
 
     }
 
+    private void InitUpdateDialog(final int position, View view, final com.example.tasfri.Aplikasi appDataIn) {
+        freqstartEd  = view.findViewById(R.id.ed_update_freqStart_app);
+        freqEndEd = view.findViewById(R.id.ed_update_freqEnd_app);
+        satuanEd = view.findViewById(R.id.ed_update_satuan_app);
+        applicationEd  = view.findViewById(R.id.ed_update_apl_app);
+        footnoteEd = view.findViewById(R.id.ed_update_footnote_app);
+
+        update = view.findViewById(R.id.btn_update_app);
+        cancel = view.findViewById(R.id.btn_cancelUpd_app);
+
+        freqstartEd.setText(appDataIn.getFreqStart());
+        freqEndEd.setText(appDataIn.getFreqEnd());
+        applicationEd.setText(appDataIn.getApplication());
+        footnoteEd.setText(appDataIn.getFootnote());
+
+        update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (Double.valueOf(freqstartEd.getText().toString())>Double.valueOf(freqEndEd.getText().toString())){
+                    freqEndEd.setError("Must higher than Frequency Start");
+                    freqstartEd.setError("Must lower than Frequency End");
+                }else{
+                    if(footnoteEd.getText().toString().isEmpty()||freqstartEd.getText().toString().isEmpty()||freqEndEd.getText().toString().isEmpty()||applicationEd.getText().toString().isEmpty()||satuanEd.getSelectedItem().toString().equalsIgnoreCase("Select Unit")){
+                        Toast.makeText(ApplicationActivity.this, "Fill the form completely", Toast.LENGTH_LONG).show();
+                    }else{
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ApplicationActivity.this);
+                        builder.setTitle(R.string.app_name);
+                        builder.setIcon(R.mipmap.ic_launcher);
+                        builder.setMessage("Are you sure you make changes ?")
+                                .setCancelable(false)
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+
+                                        freqStartTx = freqstartEd.getText().toString();
+                                        freqEndTx=freqEndEd.getText().toString();
+                                        satuanTx=satuanEd.getSelectedItem().toString();
+                                        aplikasiTx=applicationEd.getText().toString();
+                                        footnoteTx=footnoteEd.getText().toString();
+                                        freqRangeTx=String.valueOf(Double.valueOf(freqEndEd.getText().toString())-Double.valueOf(freqEndEd.getText().toString()));
+                                        keyTx=freqstartEd.getText().toString()+"-"+freqEndEd.getText().toString()+"_"+satuanEd.getSelectedItem().toString()+"_"+applicationEd.getText().toString()+"_"+footnoteEd.getText().toString();
+
+                                        reference = FirebaseDatabase.getInstance().getReference().child("Data Aplikasi");
+                                        Query a = reference.orderByChild("freqStartEnd_satuan_application_footnote").equalTo(appDataIn.getFreqStartEnd_satuan_application_footnote());
+                                        a.addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                for (DataSnapshot ds: dataSnapshot.getChildren()){
+                                                    ds.getRef().child("freqStart").setValue(freqStartTx);
+                                                    ds.getRef().child("freqEnd").setValue(freqEndTx);
+                                                    ds.getRef().child("freqStartEnd").setValue(freqStartTx+"-"+freqEndTx);
+                                                    ds.getRef().child("application").setValue(aplikasiTx);
+                                                    ds.getRef().child("satuan").setValue(satuanTx);
+                                                    ds.getRef().child("footnote").setValue(footnoteTx);
+                                                    ds.getRef().child("freqRange").setValue(freqRangeTx);
+                                                    ds.getRef().child("freqStartEnd_satuan_application_footnote").setValue(keyTx);
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
+
+                                        com.example.tasfri.Aplikasi appData = new com.example.tasfri.Aplikasi();
+
+                                        appData.setFreqStartEnd(freqStartTx+"-"+freqEndTx);
+                                        appData.setApplication(aplikasiTx);
+                                        appData.setSatuan(satuanTx);
+                                        appData.setFreqStart(freqStartTx);
+                                        appData.setFreqEnd(freqEndTx);
+                                        appData.setFreqRange(freqRangeTx);
+                                        appData.setFreqStartEnd_satuan_application_footnote(keyTx);
+                                        appData.setFootnote(footnoteTx);
+
+                                        adapter.UpdateData(position, appData);
+                                        Toast.makeText(ApplicationActivity.this,"Application Updated..",Toast.LENGTH_SHORT).show();
+
+                                        Intent intent = getIntent();
+                                        finish();
+                                        startActivity(intent);
+
+                                    }
+                                })
+                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+                        AlertDialog alert = builder.create();
+                        alert.show();
+                    }
+                }
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+    }
 
     @SuppressLint({"NewApi", "ResourceType"})
     private void toolbarSet(){
@@ -213,7 +339,7 @@ public class ApplicationActivity extends AppCompatActivity {
                                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         auth.getInstance().signOut();
-                                        startActivity(new Intent(ApplicationActivity.this, HomeActivity.class));
+                                        startActivity(new Intent(ApplicationActivity.this, OptionActivity.class));
                                         finish();
                                     }
                                 })
